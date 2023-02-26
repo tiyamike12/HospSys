@@ -7,6 +7,7 @@ use App\Http\Requests\LoginUserRequest;
 use App\Http\Requests\StoreUserRequest;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 
@@ -17,7 +18,9 @@ class AuthController extends Controller
         $request->validated($request->only(['email', 'password']));
 
         if(!Auth::attempt($request->only(['email', 'password']))) {
-            return response()->json('', 'Credentials do not match', 401);
+            return response([
+                'errors' => 'Invalid credentials'
+            ], Response::HTTP_UNAUTHORIZED);
         }
 
         $user = User::where('email', $request->email)->first();
@@ -30,6 +33,7 @@ class AuthController extends Controller
 
     public function register(StoreUserRequest $request)
     {
+        $this->authorize('create-delete-users');
         $request->validated($request->only(['name', 'email', 'password']));
 
         $user = User::create([
