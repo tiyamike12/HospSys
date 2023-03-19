@@ -32,28 +32,28 @@ class AuthController extends Controller
         ]);
     }
 
-    public function register(StoreUserRequest $request)
-    {
-        $this->authorize('create-delete-users');
-        $request->validated($request->only(['name', 'email', 'password']));
-
-        $user = User::create([
-            'name' => $request->name,
-            'email' => $request->email,
-            'password' => Hash::make($request->password),
-        ]);
-
-        return response()->json([
-            'user' => $user,
-            'token' => $user->createToken('API Token')->plainTextToken
-        ]);
-    }
+//    public function register(StoreUserRequest $request)
+//    {
+//        $this->authorize('create-delete-users');
+//        $request->validated($request->only(['name', 'email', 'password']));
+//
+//        $user = User::create([
+//            'name' => $request->name,
+//            'email' => $request->email,
+//            'password' => Hash::make($request->password),
+//        ]);
+//
+//        return response()->json([
+//            'user' => $user,
+//            'token' => $user->createToken('API Token')->plainTextToken
+//        ]);
+//    }
 
     public function logout()
     {
         Auth::user()->currentAccessToken()->delete();
 
-        return $this->success([
+        return response()->json([
             'message' => 'You have succesfully been logged out and your token has been removed'
         ]);
     }
