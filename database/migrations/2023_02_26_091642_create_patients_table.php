@@ -20,6 +20,7 @@ return new class extends Migration
             $table->string('phone');
             $table->string('email');
             $table->string('physical_address');
+            $table->string('insurance_information', 100);
             $table->timestamps();
         });
     }

@@ -11,24 +11,24 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('medical_records', function (Blueprint $table) {
+        Schema::create('billings', function (Blueprint $table) {
             $table->id();
-            $table->string('patient_id');
-            $table->string('user_id');
-            $table->dateTime('visit_date');
-            $table->text('diagnoses');
-            $table->text('treatment_plan');
-            $table->text('test_results');
-            $table->string('lab_result_id');
+            $table->bigInteger('patient_id');
+            $table->date('service_date');
+            $table->string('service_type', 100);
+            $table->decimal('cost', 10, 2);
+            $table->string('insurance_information', 100);
+            $table->string('payment_status', 20);
             $table->timestamps();
         });
     }
+
 
     /**
      * Reverse the migrations.
      */
     public function down(): void
     {
-        Schema::dropIfExists('medical_records');
+        Schema::dropIfExists('billings');
     }
 };

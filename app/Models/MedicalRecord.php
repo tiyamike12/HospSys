@@ -14,9 +14,10 @@ class MedicalRecord extends Model
         'patient_id',
         'user_id',
         'visit_date',
-        'diagnosis',
-        'discharge_date',
-        'lab_result_id'
+        'lab_result_id',
+        'diagnoses',
+        'treatment_plan',
+        'test_results'
     ];
 
     public function patient(): BelongsTo

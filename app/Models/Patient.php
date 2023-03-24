@@ -17,7 +17,8 @@ class Patient extends Model
         'date_of_birth',
         'phone',
         'email',
-        'physical_address'
+        'physical_address',
+        'insurance_information'
     ];
 
     public function labResults(): HasMany

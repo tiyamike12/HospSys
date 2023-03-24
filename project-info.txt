@@ -1,0 +1,334 @@
+A hospital management system can have many features, depending on the needs of the hospital and its users. Here are some common features that could be implemented:
+
+1. Patient Management: This feature allows hospital staff to manage patient information, including registration,
+admission, discharge, and billing.
+
+2. Appointment Management: This feature allows patients to schedule appointments with doctors or other healthcare
+providers, and allows the hospital staff to manage the appointment schedules.
+
+3. Electronic Health Record (EHR): This feature allows for the creation and management of electronic medical records
+for each patient, including their medical history, test results, diagnoses, and treatment plans.
+
+4. Billing and Payment Management: This feature allows for the management of patient billing and payments, including
+insurance claims, co-payments, and other charges.
+
+5. Inventory Management: This feature allows hospital staff to manage the inventory of medical supplies and equipment,
+including ordering, tracking, and maintaining appropriate stock levels.
+
+6. Doctor and Staff Management: This feature allows for the management of doctors and other staff members, including
+scheduling, payroll, and performance evaluations.
+
+7. Reporting and Analytics: This feature allows for the generation of reports and analysis of data related to hospital
+operations, patient care, and financial performance.
+
+8. Pharmacy Management: This feature allows for the management of pharmacy-related activities, including dispensing
+medications, tracking inventory, and managing drug interactions.
+
+9. Laboratory Management: This feature allows for the management of laboratory-related activities, including
+scheduling and tracking tests, managing test results, and generating reports.
+
+10. Patient Portal: This feature allows patients to access their medical records, schedule appointments, request
+medication refills, and communicate with healthcare providers electronically.
+
+These are just some of the many features that can be implemented in a hospital management system, and the specific
+features will depend on the needs of the hospital and its users.
+
+Patient Management Flow:
+
+Patients can register in the system through the Patient Entity.
+Patients can request appointments through the Appointment Entity and can view their scheduled appointments and medical
+records through the Patient Portal Entity.
+Doctors can create Electronic Health Records (EHR) for patients through the EHR Entity and can view a patient's
+medical history through the Patient Entity.
+Billing and payment information for patients can be managed through the Billing Entity.
+Staff and Doctor Management Flow:
+
+Staff and Doctors can register in the system through the Staff and Doctor Entities respectively.
+Staff and Doctors can view appointment schedules through the Appointment Entity and can update appointment statuses as needed.
+Doctors can view and update patients' Electronic Health Records (EHR) through the EHR Entity and can create laboratory
+test orders through the Laboratory Entity.
+Staff can manage inventory through the Inventory Entity, and can manage medication orders and refills through
+the Pharmacy Entity.
+System Management Flow:
+
+System administrators can manage user accounts and access permissions through the Patient Portal Entity.
+System administrators can monitor the system and generate reports on system usage and performance, including billing
+and payment information, through the relevant entities.
+
+
+Models(extended)
+CREATE TABLE Patient (
+  patient_id INT PRIMARY KEY,
+  first_name VARCHAR(50),
+  last_name VARCHAR(50),
+  date_of_birth DATE,
+  gender CHAR(1),
+  address VARCHAR(100),
+  phone_number VARCHAR(20),
+  email_address VARCHAR(100),
+  medical_history TEXT,
+  insurance_information VARCHAR(100)
+);
+
+CREATE TABLE Doctor (
+  doctor_id INT PRIMARY KEY,
+  first_name VARCHAR(50),
+  last_name VARCHAR(50),
+  specialty VARCHAR(100),
+  phone_number VARCHAR(20),
+  email_address VARCHAR(100)
+);
+
+CREATE TABLE Staff (
+  staff_id INT PRIMARY KEY,
+  first_name VARCHAR(50),
+  last_name VARCHAR(50),
+  role VARCHAR(100),
+  phone_number VARCHAR(20),
+  email_address VARCHAR(100)
+);
+CREATE TABLE Appointment (
+  appointment_id INT PRIMARY KEY,
+  patient_id INT REFERENCES Patient(patient_id),
+  doctor_id INT REFERENCES Doctor(doctor_id),
+  appointment_date_time DATETIME,
+  status VARCHAR(20)
+);
+CREATE TABLE EHR (
+  ehr_id INT PRIMARY KEY,
+  patient_id INT REFERENCES Patient(patient_id),
+  doctor_id INT REFERENCES Doctor(doctor_id),
+  visit_date_time DATETIME,
+  medical_history TEXT,
+  test_results TEXT,
+  diagnoses TEXT,
+  treatment_plan TEXT
+);
+CREATE TABLE Billing (
+  payment_id INT PRIMARY KEY,
+  patient_id INT REFERENCES Patient(patient_id),
+  service_date DATE,
+  service_type VARCHAR(100),
+  cost DECIMAL(10,2),
+  insurance_information VARCHAR(100),
+  payment_status VARCHAR(20)
+);
+CREATE TABLE Inventory (
+  item_id INT PRIMARY KEY,
+  item_name VARCHAR(100),
+  item_description VARCHAR(200),
+  quantity INT,
+  supplier VARCHAR(100),
+  cost DECIMAL(10,2)
+);
+CREATE TABLE Pharmacy (
+  medication_id INT PRIMARY KEY,
+  medication_name VARCHAR(100),
+  dosage VARCHAR(50),
+  quantity INT,
+  manufacturer VARCHAR(100),
+  expiration_date DATE
+);
+CREATE TABLE Laboratory (
+  test_id INT PRIMARY KEY,
+  test_name VARCHAR(100),
+  test_description VARCHAR(200),
+  test_results TEXT,
+  doctor_id INT REFERENCES Doctor(doctor_id),
+  patient_id INT REFERENCES Patient(patient_id),
+  test_date_time DATETIME
+);
+CREATE TABLE Patient_Portal (
+  user_id INT PRIMARY KEY,
+  username VARCHAR(50),
+  password VARCHAR(50),
+  patient_id INT REFERENCES Patient(patient_id),
+  email_address VARCHAR(100),
+  medical_records_access BOOLEAN,
+  appointment_scheduling BOOLEAN,
+  medication_refill_request BOOLEAN
+);
+CREATE TABLE Ward (
+  ward_id INT PRIMARY KEY,
+  ward_name VARCHAR(50),
+  ward_type VARCHAR(50),
+  capacity INT
+);
+CREATE TABLE Bed (
+  bed_id INT PRIMARY KEY,
+  ward_id INT REFERENCES Ward(ward_id),
+  bed_type VARCHAR(50),
+  bed_status VARCHAR(20),
+  patient_id INT REFERENCES Patient(patient_id),
+  admission_date DATETIME,
+  discharge_date DATETIME
+);
+CREATE TABLE Admission (
+  admission_id INT PRIMARY KEY
+  patient_id INT REFERENCES Patient(patient_id),
+  doctor_id INT REFERENCES Doctor(doctor_id),
+  ward_id INT REFERENCES Ward(ward_id),
+  bed_id INT REFERENCES Bed(bed_id),
+  admission_date DATETIME,
+  discharge_date DATETIME,
+  admission_reason VARCHAR(200),
+  discharge_reason VARCHAR(200),
+  status VARCHAR(20)
+);
+CREATE TABLE Surgery (
+  surgery_id INT PRIMARY KEY,
+  patient_id INT REFERENCES Patient(patient_id),
+  doctor_id INT REFERENCES Doctor(doctor_id),
+  surgery_date DATETIME,
+  surgery_type VARCHAR(100),
+  status VARCHAR(20)
+);
+CREATE TABLE Imaging (
+  imaging_id INT PRIMARY KEY,
+  patient_id INT REFERENCES Patient(patient_id),
+  doctor_id INT REFERENCES Doctor(doctor_id),
+  imaging_date DATETIME,
+  imaging_type VARCHAR(100),
+  imaging_results TEXT,
+  status VARCHAR(20)
+);
+CREATE TABLE Emergency_Department (
+  patient_id INT REFERENCES Patient(patient_id),
+  doctor_id INT REFERENCES Doctor(doctor_id),
+  admission_date DATETIME,
+  discharge_date DATETIME,
+  reason VARCHAR(200),
+  status VARCHAR(20)
+);
+brief overview of how these entities can work together in a hospital management system.
+
+Patient entity: This entity stores information about the patient, such as their name, date of birth, contact
+information, and medical history. This information can be used by doctors and other healthcare professionals to
+provide better care and treatment to the patient.
+
+Doctor entity: This entity stores information about doctors working at the hospital, such as their name, specialty,
+contact information, and schedule. This information can be used to schedule appointments, surgeries, and other medical
+procedures.
+
+Nurse entity: This entity stores information about nurses working at the hospital, such as their name, contact
+information, and schedule. This information can be used to schedule nursing shifts and assign nurses to specific patients.
+
+Pharmacy entity: This entity stores information about medications and prescriptions, such as the name of the
+medication, dosage, and prescribing doctor. This information can be used to track patient medications and ensure
+that they are receiving the correct dosage and type of medication.
+
+Laboratory entity: This entity stores information about laboratory tests and results, such as the name of the
+test, date of the test, and results. This information can be used to track patient lab results and provide more
+accurate diagnosis and treatment.
+
+Billing entity: This entity stores information about patient billing, such as the cost of procedures, medications,
+and other medical expenses. This information can be used to generate patient bills and manage hospital finances.
+
+Appointment entity: This entity stores information about patient appointments, such as the date and time of the
+appointment, the doctor or nurse assigned to the appointment, and the reason for the appointment. This information
+can be used to schedule and manage patient appointments.
+
+Department entity: This entity stores information about hospital departments, such as the name of the department
+and the head of the department. This information can be used to organize hospital operations and manage
+department-specific tasks.
+
+Ward entity: This entity stores information about hospital wards, such as the name of the ward and the number of
+beds in the ward. This information can be used to manage patient admissions and discharges.
+
+Bed entity: This entity stores information about hospital beds, such as the bed number and the ward it is located in.
+This information can be used to manage patient admissions and discharges.
+
+Employee entity: This entity stores information about hospital employees, such as their name, position, and
+contact information. This information can be used to manage employee schedules and contact information.
+
+Schedule entity: This entity stores information about employee schedules, such as the date, time, and location of
+their shifts. This information can be used to manage employee schedules and ensure adequate staffing levels.
+
+Admission entity: This entity stores information about patient admissions, such as the admission date, discharge date,
+reason for admission, and the doctor, ward, and bed assigned to the patient. This information can be used to manage
+patient admissions and discharges.
+
+Surgery entity: This entity stores information about patient surgeries, such as the date of the surgery, the doctor
+performing the surgery, and the type of surgery. This information can be used to manage surgical procedures and track
+patient outcomes.
+
+Imaging entity: This entity stores information about patient imaging tests, such as the type of imaging test performed
+and the results. This information can be used to manage patient imaging tests and track patient outcomes.
+
+Emergency Department entity: This entity stores information about patient visits to the emergency department, such as
+the reason for the visit and the doctor assigned to the patient. This information can be used to manage patient visits
+to the emergency department and ensure timely care.
+
+********************** PROCESS FLOW ******************************
+/                                                               /
+/                                                                /
+/*****************************************************************
+Patient registration: A new patient arrives at the hospital and provides their personal and medical information.
+The hospital staff creates a new patient entity and records the patient's information in the system. The patient
+is then assigned a unique patient ID that will be used to track their medical history and treatment.
+
+Appointment scheduling: The patient requests an appointment with a doctor or nurse. The hospital staff creates an
+appointment entity and schedules the appointment for the patient, recording the appointment details such as the date,
+time, and location. The appointment is then assigned to a doctor or nurse who will be responsible for providing the
+care during the appointment.
+
+Patient visit: The patient arrives for their appointment and checks in with the hospital staff. The hospital staff
+updates the appointment entity to reflect that the patient has arrived and is currently waiting for their appointment.
+
+Medical examination: The doctor or nurse assigned to the appointment performs a medical examination on the patient.
+They record their findings in the patient entity, updating the patient's medical history and treatment plan as necessary.
+
+Prescription management: If the doctor determines that the patient needs medication, they create a prescription entity
+and assign the prescription to the patient. The prescription entity records details about the medication, such as the
+name, dosage, and prescribing doctor. The pharmacy entity is then notified of the new prescription and begins preparing
+the medication for the patient.
+
+Laboratory tests: If the doctor determines that the patient needs laboratory tests, they create a laboratory entity
+and assign the tests to the patient. The laboratory entity records details about the test, such as the type of test,
+date of the test, and test results. The laboratory staff performs the test and updates the laboratory entity with
+the test results.
+
+Billing: The hospital staff creates a billing entity for the patient, recording the costs associated with the
+appointment, medication, laboratory tests, and any other medical expenses. The billing entity is used to generate
+a bill for the patient.
+
+Patient admission: If the patient needs to be admitted to the hospital, the hospital staff creates an admission
+entity and assigns the patient to a ward and bed. The admission entity records details about the admission, such
+as the admission date, discharge date, and reason for admission. The patient entity is updated to reflect the
+patient's current status as an admitted patient.
+
+Surgery: If the patient needs surgery, the hospital staff creates a surgery entity and assigns the surgery to the
+patient. The surgery entity records details about the surgery, such as the type of surgery and the date of the surgery.
+The surgery is then performed by the assigned doctor or surgeon, and the surgery entity is updated with the results of
+the surgery.
+
+Imaging: If the patient needs imaging tests, the hospital staff creates an imaging entity and assigns the tests to the
+patient. The imaging entity records details about the tests, such as the type of test and the date of the test. The
+imaging tests are then performed by the assigned radiologist, and the imaging entity is updated with the results
+of the tests.
+
+Employee management: The hospital staff creates employee entities for all hospital staff, recording their personal
+and contact information, position, and schedule. The schedule entity is used to manage employee schedules and ensure
+adequate staffing levels.
+
+Emergency department visits: If a patient requires emergency care, they can be seen in the emergency department.
+The hospital staff creates an emergency department entity and assigns the patient to a doctor. The emergency department
+entity records details about the patient's visit, such as the reason for the visit and the doctor assigned to the
+patient. The doctor then provides emergency care to the patient, updating the patient entity as necessary.
+
+
+For example, the "Patient" entity has a one-to-many relationship with the "Appointment" entity, indicating that a
+patient can have multiple appointments but each appointment is assigned to only one patient. Similarly, the "Doctor"
+and "Nurse" entities have a many-to-many relationship with the "Appointment" entity, indicating that multiple doctors
+and nurses can be assigned to an appointment and a doctor or nurse can be assigned to multiple appointments.
+
+The "Prescription" and "Laboratory Test" entities have a one-to-many relationship with the "Patient" entity,
+indicating that a patient can have multiple prescriptions and laboratory tests, but each prescription and laboratory
+test is assigned to only one patient.
+
+There are also many-to-many relationships between the "Doctor" and "Patient" entities, indicating that a doctor can
+treat multiple patients and a patient can be treated by multiple doctors. The same is true for the "Nurse" and
+"Patient" entities.
+
+USER -- ROLE -- DUTIES ACCORDING TO ROLE
+DOCTOR CAN HAVE SPECIALTY

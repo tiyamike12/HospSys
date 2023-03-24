@@ -1,0 +1,90 @@
+Here are some possible entity models for a hospital management system:
+
+Patient Entity:
+- Patient ID (primary key)
+- First Name
+- Last Name
+- Date of Birth
+- Gender
+- Address
+- Phone Number
+- Email Address
+- Medical History
+- Insurance Information
+
+Doctor Entity:
+- Doctor ID (primary key)
+- First Name
+- Last Name
+- Specialty
+- Phone Number
+- Email Address
+
+Staff Entity:
+- Staff ID (primary key)
+- First Name
+- Last Name
+- Role (e.g. nurse, receptionist, administrator)
+- Phone Number
+- Email Address
+
+Appointment Entity:
+- Appointment ID (primary key)
+- Patient ID (foreign key to Patient Entity)
+- Doctor ID (foreign key to Doctor Entity)
+- Date and Time
+- Status (e.g. scheduled, cancelled, completed)
+
+Electronic Health Record (EHR) Entity:
+- EHR ID (primary key)
+- Patient ID (foreign key to Patient Entity)
+- Doctor ID (foreign key to Doctor Entity)
+- Date and Time of Visit
+- Medical History
+- Test Results
+- Diagnoses
+- Treatment Plan
+
+Billing and Payment Entity:
+- Payment ID (primary key)
+- Patient ID (foreign key to Patient Entity)
+- Date of Service
+- Type of Service (e.g. consultation, lab test)
+- Cost
+- Insurance Information
+- Payment Status
+
+Inventory Entity:
+- Item ID (primary key)
+- Item Name
+- Item Description
+- Quantity
+- Supplier
+- Cost
+
+Pharmacy Entity:
+- Medication ID (primary key)
+- Medication Name
+- Dosage
+- Quantity
+- Manufacturer
+- Expiration Date
+
+Laboratory Entity:
+- Test ID (primary key)
+- Test Name
+- Test Description
+- Test Results
+- Doctor ID (foreign key to Doctor Entity)
+- Patient ID (foreign key to Patient Entity)
+- Date and Time
+
+Patient Portal Entity:
+- User ID (primary key)
+- Username
+- Password
+- Patient ID (foreign key to Patient Entity)
+- Email Address
+- Medical Records Access
+- Appointment Scheduling
+- Medication Refill Request
