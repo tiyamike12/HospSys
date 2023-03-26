@@ -26,15 +26,7 @@ class MedicalRecordController extends Controller
      */
     public function store(StoreRequest $request): MedicalRecordResource
     {
-        $medicalRecord = MedicalRecord::create([
-            'patient_id' => $request->patient_id,
-            'user_id' => $request->patient_id,
-            'visit_date' => $request->patient_id,
-            'diagnosis' => $request->patient_id,
-            'discharge_date' => $request->patient_id,
-            'lab_result_id' => $request->patient_id,
-        ]);
-
+        $medicalRecord = MedicalRecord::create($request->validated());
         return new MedicalRecordResource($medicalRecord);
     }
 
@@ -51,13 +43,8 @@ class MedicalRecordController extends Controller
      */
     public function update(UpdateRequest $request, MedicalRecord $medicalRecord): MedicalRecordResource
     {
-        $medicalRecord->patient_id = $request->patient_id;
-        $medicalRecord->user_id = $request->user_id;
-        $medicalRecord->visit_date = $request->visit_date;
-        $medicalRecord->diagnosis = $request->diagnosis;
-        $medicalRecord->discharge_date = $request->discharge_date;
-        $medicalRecord->lab_result_id = $request->lab_result_id;
-        $medicalRecord->save();
+        $medicalRecord->fill($request->validated());
+        $medicalRecord->update();
 
         return new MedicalRecordResource($medicalRecord);
     }

@@ -26,9 +26,10 @@ class StoreRequest extends FormRequest
             'surname' => ['required', 'string'],
             'gender' => ['required', 'string'],
             'date_of_birth' => ['required', 'date'],
-            'phone' => ['required', 'numeric'],
+            'phone' => ['required', 'string'],
             'email' => ['required', 'email'],
-            'physical_address' => ['required', 'string']
+            'physical_address' => ['required', 'string'],
+            'insurance_information' => ['required', 'string']
         ];
     }
 }

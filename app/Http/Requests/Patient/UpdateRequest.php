@@ -28,7 +28,8 @@ class UpdateRequest extends FormRequest
             'date_of_birth' => ['required', 'date'],
             'phone' => ['required', 'numeric'],
             'email' => ['required', 'email'],
-            'physical_address' => ['required', 'string']
+            'physical_address' => ['required', 'string'],
+            'insurance_information' => ['required', 'string']
         ];
     }
 }

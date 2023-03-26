@@ -26,15 +26,7 @@ class UserController extends Controller
      */
     public function store(StoreUserRequest $request): UserResource
     {
-        $user = User::create([
-            'name' => $request->name,
-            'email' => $request->email,
-            'password' => bcrypt($request->password),
-            'role_id' => $request->role_id,
-            'phone_number' => $request->phone_number,
-
-        ]);
-
+        $user = User::create($request->validated());
         return new UserResource($user);
     }
 
@@ -51,12 +43,8 @@ class UserController extends Controller
      */
     public function update(UpdateUserRequest $request, User $user): UserResource
     {
-        $user->name = $request->name;
-        $user->email = $request->email;
-        //$user->password = $request->password;
-        $user->role_id = $request->role_id;
-        $user->save();
-
+        $user->fill($request->validated());
+        $user->update();
         return new UserResource($user);
     }
 

@@ -25,9 +25,10 @@ class UpdateRequest extends FormRequest
             'patient_id' => ['required', 'numeric'],
             'user_id' => ['required', 'numeric'],
             'visit_date' => ['required', 'string'],
-            'diagnosis' => ['required', 'string', 'max:255'],
-            'discharge_date' => ['required', 'date'],
+            'diagnoses' => ['required', 'string', 'max:255'],
             'lab_result_id' => ['required', 'numeric'],
+            'test_results' => ['required', 'string'],
+            'treatment_plan' => ['required', 'string'],
         ];
     }
 }

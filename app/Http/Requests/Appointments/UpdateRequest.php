@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Requests\MedicalRecords;
+namespace App\Http\Requests\Appointments;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class StoreRequest extends FormRequest
+class UpdateRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,11 +24,8 @@ class StoreRequest extends FormRequest
         return [
             'patient_id' => ['required', 'numeric'],
             'user_id' => ['required', 'numeric'],
-            'visit_date' => ['required', 'string'],
-            'diagnoses' => ['required', 'string', 'max:255'],
-            'lab_result_id' => ['required', 'numeric'],
-            'test_results' => ['required', 'string'],
-            'treatment_plan' => ['required', 'string'],
+            'appointment_date_time' => ['required', 'date'],
+            'status' => ['required', 'string'],
         ];
     }
 }

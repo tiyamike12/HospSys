@@ -27,16 +27,7 @@ class PatientController extends Controller
      */
     public function store(StoreRequest $request): PatientResource
     {
-        $patient = Patient::create([
-            'firstname' => $request->firstname,
-            'surname' => $request->surname,
-            'gender' => $request->gender,
-            'date_of_birth' => $request->date_of_birth,
-            'phone' => $request->phone,
-            'email' => $request->email,
-            'physical_address' => $request->physical_address
-        ]);
-
+        $patient = Patient::create($request->validated());
         return new PatientResource($patient);
     }
 
@@ -46,7 +37,6 @@ class PatientController extends Controller
     public function show(Patient $patient): PatientResource
     {
         return new PatientResource($patient);
-
     }
 
     /**
@@ -54,14 +44,8 @@ class PatientController extends Controller
      */
     public function update(UpdateRequest $request, Patient $patient): PatientResource
     {
-        $patient->firstname = $request->firstname;
-        $patient->surname = $request->surname;
-        $patient->gender = $request->gender;
-        $patient->date_of_birth = $request->date_of_birth;
-        $patient->phone = $request->phone;
-        $patient->email = $request->email;
-        $patient->physical_address = $request->physical_address;
-        $patient->save();
+        $patient->fill($request->validated());
+        $patient->update();
         return new PatientResource($patient);
     }
 
