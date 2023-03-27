@@ -11,7 +11,6 @@ class Bed extends Model
 
     protected $fillable = [
         'ward_id',
-        'bed_id',
         'patient_id',
         'bed_type',
         'bed_status',

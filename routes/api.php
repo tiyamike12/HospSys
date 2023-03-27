@@ -2,11 +2,15 @@
 
 use App\Http\Controllers\api\AppointmentController;
 use App\Http\Controllers\api\AuthController;
+use App\Http\Controllers\api\BedController;
 use App\Http\Controllers\api\BillingController;
+use App\Http\Controllers\api\InventoryController;
 use App\Http\Controllers\api\MedicalRecordController;
 use App\Http\Controllers\api\PatientController;
+use App\Http\Controllers\api\PharmacyController;
 use App\Http\Controllers\api\RoleController;
 use App\Http\Controllers\api\UserController;
+use App\Http\Controllers\api\WardController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -38,4 +42,9 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::apiResource('/patients', PatientController::class);
     Route::apiResource('/appointments', AppointmentController::class);
     Route::apiResource('/billings', BillingController::class);
+    Route::apiResource('/wards', WardController::class);
+    Route::apiResource('/pharmacy', PharmacyController::class);
+    Route::apiResource('/inventories', InventoryController::class);
+    Route::apiResource('/beds', BedController::class);
+
 });

@@ -14,7 +14,6 @@ return new class extends Migration
         Schema::create('beds', function (Blueprint $table) {
             $table->id();
             $table->bigInteger('ward_id');
-            $table->bigInteger('bed_id');
             $table->bigInteger('patient_id');
             $table->string('bed_type');
             $table->string('bed_status');
