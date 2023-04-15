@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\api\AdmissionController;
 use App\Http\Controllers\api\AppointmentController;
 use App\Http\Controllers\api\AuthController;
 use App\Http\Controllers\api\BedController;
@@ -46,5 +47,6 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::apiResource('/pharmacy', PharmacyController::class);
     Route::apiResource('/inventories', InventoryController::class);
     Route::apiResource('/beds', BedController::class);
+    Route::apiResource('/admissions', AdmissionController::class);
 
 });

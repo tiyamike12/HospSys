@@ -29,7 +29,7 @@ class StoreRequest extends FormRequest
             'phone' => ['required', 'string'],
             'email' => ['required', 'email'],
             'physical_address' => ['required', 'string'],
-            'insurance_information' => ['required', 'string']
+            'insurance_information' => ['string']
         ];
     }
 }

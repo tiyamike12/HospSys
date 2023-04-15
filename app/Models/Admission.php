@@ -17,7 +17,7 @@ class Admission extends Model
         'admission_date',
         'discharge_date',
         'admission_reason',
-        'admission_reason',
+        'discharge_reason',
         'status',
     ];
 }
