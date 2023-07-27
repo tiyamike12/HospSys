@@ -15,21 +15,15 @@ class AuthController extends Controller
 {
     public function login(LoginUserRequest $request)
     {
-        $request->validated($request->only(['email', 'password']));
+        $credentials = $request->only(['username', 'password']);
 
-        if(!Auth::attempt($request->only(['email', 'password']))) {
-            return response([
-                'errors' => 'Invalid credentials'
-            ], Response::HTTP_UNAUTHORIZED);
+        if (Auth::attempt($credentials)) {
+            $user = Auth::user();
+            $token = $user->createToken('auth_token')->plainTextToken;
+            return response()->json(['token' => $token], 200);
+        } else {
+            return response()->json(['message' => 'Invalid credentials'], 401);
         }
-
-        $user = User::where('email', $request->email)->first();
-
-        return response()->json([
-            'user' => $user,
-            'token' => $user->createToken('API Token')->plainTextToken,
-            //'role' => $user->role
-        ]);
     }
 
 //    public function register(StoreUserRequest $request)

@@ -14,9 +14,14 @@ class RoleSeeder extends Seeder
     public function run(): void
     {
         Role::insert([
-            ['name' => 'SuperAdmin'],
-            ['name' => 'Doctor'],
-            ['name' => 'Nurse'],
+            ['name' => 'doctor', 'created_at' => date('Y-m-d'),
+                'updated_at' => date('Y-m-d')],
+            ['name' => 'nurse', 'created_at' => date('Y-m-d'),
+                'updated_at' => date('Y-m-d')],
+            ['name' => 'finance_manager', 'created_at' => date('Y-m-d'),
+                'updated_at' => date('Y-m-d')],
+            ['name' => 'pharmacist', 'created_at' => date('Y-m-d'),
+                'updated_at' => date('Y-m-d')],
         ]);
     }
 }

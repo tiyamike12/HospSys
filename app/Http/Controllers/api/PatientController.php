@@ -25,10 +25,13 @@ class PatientController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreRequest $request): PatientResource
+    public function store(StoreRequest $request): JsonResponse
     {
         $patient = Patient::create($request->validated());
-        return new PatientResource($patient);
+        return response()->json([
+            'message' => 'Patient created successfully',
+            'data' => $patient,
+        ], 201);
     }
 
     /**

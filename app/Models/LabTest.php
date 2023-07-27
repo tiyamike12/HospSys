@@ -4,14 +4,16 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
-class Pharmacy extends Model
+class LabTest extends Model
 {
     use HasFactory;
 
     protected $fillable = [
-        'item_name', 'description', 'quantity_available', 'unit_price',
+        'test_name', 'description', 'lab_charges',
 
     ];
 

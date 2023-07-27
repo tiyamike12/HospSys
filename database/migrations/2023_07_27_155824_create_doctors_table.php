@@ -11,16 +11,17 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('emergency_departments', function (Blueprint $table) {
+        Schema::create('doctors', function (Blueprint $table) {
             $table->id();
-            $table->bigInteger('patient_id');
-            $table->bigInteger('user_id');
-            $table->dateTime('admission_date');
-            $table->dateTime('discharge_date');
-            $table->string('reason', 100);
-            $table->string('status', 20);
+            $table->unsignedBigInteger('person_id')->unique();
+            $table->string('specialization');
             $table->timestamps();
+
+            $table->foreign('person_id')->references('id')->on('people')->onDelete('cascade');
+
         });
+
+
     }
 
     /**
@@ -28,6 +29,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('emergency_departments');
+        Schema::dropIfExists('doctors');
     }
 };

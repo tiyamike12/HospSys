@@ -22,11 +22,16 @@ class StoreUserRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
-            'password' => ['required', 'string', Rules\Password::defaults()],
-            'role_id' => ['required', 'numeric'],
-            'phone_number' => ['required', 'numeric']
+            'username' => 'required|string|unique:users',
+            'password' => 'required|string',
+            'firstname' => 'required|string',
+            'lastname' => 'required|string',
+            'date_of_birth' => 'required|date',
+            'gender' => 'required|string',
+            'email' => 'required|email|unique:people',
+            'phone' => 'required|string|unique:people',
+            'physical_address' => 'required|string',
+            'role_id' => 'required|exists:roles,id',
         ];
     }
 }

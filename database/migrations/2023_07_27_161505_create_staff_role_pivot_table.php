@@ -11,22 +11,18 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('billings', function (Blueprint $table) {
-            $table->id();
-            $table->bigInteger('patient_id');
-            $table->date('billing_date');
-            $table->decimal('amount', 10, 2);
-            $table->string('payment_status', 20);
-            $table->timestamps();
+        Schema::create('staff_role', function (Blueprint $table) {
+            $table->foreignId('staff_id')->constrained('staff');
+            $table->foreignId('role_id')->constrained('roles');
+            $table->primary(['staff_id', 'role_id']);
         });
     }
-
 
     /**
      * Reverse the migrations.
      */
     public function down(): void
     {
-        Schema::dropIfExists('billings');
+        Schema::dropIfExists('staff_role');
     }
 };

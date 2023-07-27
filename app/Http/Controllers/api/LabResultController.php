@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\LabResults\StoreRequest;
 use App\Http\Requests\LabResults\UpdateRequest;
 use App\Http\Resources\LabResultResource;
-use App\Models\LabResult;
+use App\Models\LabTest;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
@@ -18,7 +18,7 @@ class LabResultController extends Controller
      */
     public function index(): AnonymousResourceCollection
     {
-        return LabResultResource::collection(LabResult::all());
+        return LabResultResource::collection(LabTest::all());
 
     }
 
@@ -27,7 +27,7 @@ class LabResultController extends Controller
      */
     public function store(StoreRequest $request): LabResultResource
     {
-        $labResult = LabResult::create([
+        $labResult = LabTest::create([
             'user_id' => $request->user_id,
             'patient_id' => $request->patient_id,
             'test_date' => $request->test_date,
@@ -41,7 +41,7 @@ class LabResultController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(LabResult $labResult): LabResultResource
+    public function show(LabTest $labResult): LabResultResource
     {
         return new LabResultResource($labResult);
     }
@@ -49,7 +49,7 @@ class LabResultController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateRequest $request, LabResult $labResult): LabResultResource
+    public function update(UpdateRequest $request, LabTest $labResult): LabResultResource
     {
         $labResult->user_id = $request->user_id;
         $labResult->patient_id = $request->patient_id;
@@ -63,7 +63,7 @@ class LabResultController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(LabResult $labResult): JsonResponse
+    public function destroy(LabTest $labResult): JsonResponse
     {
         $labResult->delete();
         return response()->json(null, 204);

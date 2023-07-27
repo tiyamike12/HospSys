@@ -13,13 +13,12 @@ return new class extends Migration
     {
         Schema::create('medical_records', function (Blueprint $table) {
             $table->id();
-            $table->string('patient_id');
-            $table->string('user_id');
-            $table->dateTime('visit_date');
+            $table->bigInteger('patient_id');
+            $table->bigInteger('doctor_id');
             $table->text('diagnoses');
-            $table->text('treatment_plan');
-            $table->text('test_results');
-            $table->string('lab_result_id');
+            $table->text('medical_notes');
+            $table->text('prescriptions');
+            $table->string('lab_results');
             $table->timestamps();
         });
     }

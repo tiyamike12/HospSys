@@ -14,9 +14,10 @@ return new class extends Migration
         Schema::create('appointments', function (Blueprint $table) {
             $table->id();
             $table->bigInteger('patient_id');
-            $table->bigInteger('user_id');
-            $table->dateTime('appointment_date_time');
-            $table->string('status', 20);
+            $table->bigInteger('doctor_id');
+            $table->date('appointment_date');
+            $table->time('appointment_time');
+            $table->string('purpose', 20);
             $table->timestamps();
         });
     }

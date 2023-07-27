@@ -11,17 +11,17 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('patients', function (Blueprint $table) {
+        Schema::create('nurses', function (Blueprint $table) {
             $table->id();
-            $table->string('firstname');
-            $table->string('surname');
-            $table->enum('gender', ['male', 'female']);
-            $table->date('date_of_birth');
-            $table->string('phone');
-            $table->string('email');
-            $table->string('physical_address');
+            $table->unsignedBigInteger('person_id')->unique();
+            $table->string('specialization');
             $table->timestamps();
+
+            $table->foreign('person_id')->references('id')->on('people')->onDelete('cascade');
+
         });
+
+
     }
 
     /**
@@ -29,6 +29,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('patients');
+        Schema::dropIfExists('nurses');
     }
 };
