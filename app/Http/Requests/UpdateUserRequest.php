@@ -23,15 +23,15 @@ class UpdateUserRequest extends FormRequest
     {
         return [
             'username' => 'string',
-            'password' => 'string',
+//            'password' => 'string',
             'firstname' => 'string',
             'lastname' => 'string',
-            'date_of_birth' => 'date',
-            'gender' => 'string',
-            'email' => 'email|unique:people,email,',
-            'phone' => 'string|unique:people,phone,',
-            'physical_address' => 'string',
-            'role_id' => 'exists:roles,id',
+//            'date_of_birth' => 'date',
+//            'gender' => 'string',
+//            'email' => 'exists:people,email',
+//            'phone' => 'exists:people,phone,',
+//            'physical_address' => 'string',
+//            'role_id' => 'exists:roles,id',
         ];
     }
 }

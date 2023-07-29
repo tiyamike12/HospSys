@@ -13,9 +13,4 @@ class Role extends Model
 
     protected $fillable = ['name'];
 
-    public function staff(): BelongsToMany
-    {
-        return $this->belongsToMany(Staff::class, 'staff_role');
-    }
-
 }

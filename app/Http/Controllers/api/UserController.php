@@ -6,17 +6,16 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreUserRequest;
 use App\Http\Requests\UpdateUserRequest;
 use App\Http\Resources\UserResource;
-use App\Models\Doctor;
-use App\Models\Nurse;
 use App\Models\Person;
 use App\Models\Role;
-use App\Models\Staff;
 use App\Models\User;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Log;
+
 
 class UserController extends Controller
 {
@@ -45,6 +44,7 @@ class UserController extends Controller
                 'email' => $request->input('email'),
                 'phone' => $request->input('phone'),
                 'physical_address' => $request->input('physical_address'),
+                'job_title' => $request->input('job_title'),
             ]);
 
             // Create a new user record
@@ -58,37 +58,6 @@ class UserController extends Controller
             $person->user_id = $user->id;
             $person->save();
 
-            // Retrieve the role ID for "Nurse" from the roles table
-            $nurseRoleId = Role::where('name', 'Nurse')->value('id');
-            $doctorRoleId = Role::where('name', 'Doctor')->value('id');
-            $staffRoleId = Role::where('id', $request->input('role_id'))->value('id');
-
-            switch ($request->input('role_id')) {
-                case $doctorRoleId:
-                    $doctor = Doctor::create([
-                        'person_id' => $person->id,
-                        'specialization' => $request->input('specialization'), // Add other doctor attributes here
-                    ]);
-                    break;
-
-                case $nurseRoleId:
-                    $nurse = Nurse::create([
-                        'person_id' => $person->id,
-                        'specialization' => $request->input('specialization'), // Add other nurse attributes here
-                    ]);
-                    break;
-
-                case $staffRoleId:
-                    $staff = Staff::create([
-                        'person_id' => $person->id,
-                        'job_title' => $request->input('specialization'), // Add other staff attributes here
-                    ]);
-                    break;
-
-                default:
-                    break;
-            }
-
             // If everything is successful, commit the transaction
             DB::commit();
             return response()->json(['message' => 'User created successfully'], 201);
@@ -98,7 +67,7 @@ class UserController extends Controller
             DB::rollBack();
 
             // Handle the error as needed (e.g., log it or throw an exception)
-            return response()->json(['message' => 'Failed to create user.'], 500);
+            return response()->json(['message' => 'Failed to create user.', 'error' => $e], 500);
         }
     }
 
@@ -113,21 +82,49 @@ class UserController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateUserRequest $request, $user): UserResource
+    public function update(UpdateUserRequest $request, $userId): JsonResponse
     {
+        Log::info('API Update User Request Data:', ['data' => $request->all()]);
+        Log::info('User ID:', ['user_id' => $userId]);
+        DB::beginTransaction();
 
-        $userOb = User::findOrFail($user);
+        try {
+            // Find the user by ID
+            $user = User::findOrFail($userId);
 
+            // Update the user record
+            $user->update([
+                'username' => $request->input('username'),
+//                'password' => Hash::make($request->input('password')),
+                'role_id' => $request->input('role_id'),
+            ]);
 
-        //dd($userOb);
-        // Update user data
-        $userOb->update($request->only(['username', 'password', 'role_id']));
-        //echo $userOb;
-        // Update person data (assuming you have the user_id column in the people table)
-        $userOb->person->update($request->only(['firstname', 'lastname', 'date_of_birth', 'gender', 'email', 'phone', 'physical_address']));
+            // Find or create the associated person record based on the user's ID
+            $person = Person::firstOrNew(['user_id' => $user->id]);
+            $person->fill([
+                'firstname' => $request->input('firstname'),
+                'lastname' => $request->input('lastname'),
+                'date_of_birth' => $request->input('date_of_birth'),
+                'gender' => $request->input('gender'),
+                'email' => $request->input('email'),
+                'phone' => $request->input('phone'),
+                'physical_address' => $request->input('physical_address'),
+                'job_title' => $request->input('job_title'),
+            ]);
+            $person->save();
 
-        return new UserResource($userOb);
+            // If everything is successful, commit the transaction
+            DB::commit();
+            return response()->json(['message' => 'User updated successfully'], 200);
+        } catch (\Exception $e) {
+            // If any error occurs, rollback the transaction
+            DB::rollBack();
+
+            // Handle the error as needed (e.g., log it or throw an exception)
+            return response()->json(['message' => 'Failed to update user.', 'error' => $e], 500);
+        }
     }
+
 
     /**
      * Remove the specified resource from storage.
@@ -136,5 +133,19 @@ class UserController extends Controller
     {
         $user->delete();
         return response()->json(null, 204);
+    }
+
+    /**
+     * Get a list of doctors.
+     *
+     * @return JsonResponse
+     */
+    public function getDoctors(): JsonResponse
+    {
+        //$doctors = User::doctors()->get();
+
+        $doctors = User::doctors()->with('person')->get();
+
+        return response()->json($doctors, 200);
     }
 }

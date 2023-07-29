@@ -17,9 +17,11 @@ class Person extends Model
         'email',
         'phone',
         'physical_address',
-        'user_id'
+        'user_id',
+        'job_title'
     ];
 
     // No table associated with this model as it serves as a base model.
     //public $table = false;
+
 }

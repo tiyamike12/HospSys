@@ -23,7 +23,7 @@ class Billing extends Model
 
     public function pharmacyItems(): BelongsToMany
     {
-        return $this->belongsToMany(Pharmacy::class)->withPivot('quantity');
+        return $this->belongsToMany(PharmacyItem::class)->withPivot('quantity');
     }
 
     public function labTests(): BelongsToMany

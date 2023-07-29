@@ -21,6 +21,7 @@ return new class extends Migration
             $table->string('phone');
             $table->string('physical_address');
             $table->unsignedBigInteger('user_id')->nullable();
+            $table->string('job_title');
             $table->timestamps();
 
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');

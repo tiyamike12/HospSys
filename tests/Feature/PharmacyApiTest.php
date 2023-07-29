@@ -2,7 +2,7 @@
 
 namespace Tests\Feature;
 
-use App\Models\Pharmacy;
+use App\Models\PharmacyItem;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
@@ -17,7 +17,7 @@ class PharmacyApiTest extends TestCase
         $user = User::factory()->create();
         $token = $user->createToken('Test Token')->plainTextToken;
 
-        $pharmacy = Pharmacy::factory()->make()->toArray();
+        $pharmacy = PharmacyItem::factory()->make()->toArray();
         $response = $this->actingAs($user)->withHeaders([
             'Authorization' => 'Bearer ' . $token,
             'Accept' => 'application/json',
@@ -31,7 +31,7 @@ class PharmacyApiTest extends TestCase
         $user = User::factory()->create();
         $token = $user->createToken('Test Token')->plainTextToken;
 
-        $resource = Pharmacy::factory()->make();
+        $resource = PharmacyItem::factory()->make();
 
         $response = $this->actingAs($user)->withHeaders([
             'Authorization' => 'Bearer ' . $token,
@@ -54,7 +54,7 @@ class PharmacyApiTest extends TestCase
             'expiration_date' => '2034-10-10'
         ];
 
-        $resource = Pharmacy::factory()->create();
+        $resource = PharmacyItem::factory()->create();
 
         $response = $this->actingAs($user)->withHeaders([
             'Authorization' => 'Bearer ' . $token,
@@ -69,7 +69,7 @@ class PharmacyApiTest extends TestCase
         $user = User::factory()->create();
         $token = $user->createToken('Test Token')->plainTextToken;
 
-        $resource = Pharmacy::factory()->create();
+        $resource = PharmacyItem::factory()->create();
 
         $response = $this->actingAs($user)->withHeaders([
             'Authorization' => 'Bearer ' . $token,

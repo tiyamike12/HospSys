@@ -6,19 +6,19 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Pharmacy\StoreRequest;
 use App\Http\Requests\Pharmacy\UpdateRequest;
 use App\Http\Resources\PharmacyResource;
-use App\Models\Pharmacy;
+use App\Models\PharmacyItem;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 
-class PharmacyController extends Controller
+class PharmacyItemController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index(): AnonymousResourceCollection
     {
-        return PharmacyResource::collection(Pharmacy::all());
+        return PharmacyResource::collection(PharmacyItem::all());
 
     }
 
@@ -27,34 +27,34 @@ class PharmacyController extends Controller
      */
     public function store(StoreRequest $request): PharmacyResource
     {
-        $pharmacy = Pharmacy::create($request->validated());
+        $pharmacy = PharmacyItem::create($request->validated());
         return new PharmacyResource($pharmacy);
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(Pharmacy $pharmacy): PharmacyResource
+    public function show(PharmacyItem $pharmacyItem): PharmacyResource
     {
-        return new PharmacyResource($pharmacy);
+        return new PharmacyResource($pharmacyItem);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateRequest $request, Pharmacy $pharmacy): PharmacyResource
+    public function update(UpdateRequest $request, PharmacyItem $pharmacyItem): PharmacyResource
     {
-        $pharmacy->fill($request->validated());
-        $pharmacy->update();
-        return new PharmacyResource($pharmacy);
+        $pharmacyItem->fill($request->validated());
+        $pharmacyItem->update();
+        return new PharmacyResource($pharmacyItem);
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Pharmacy $pharmacy): JsonResponse
+    public function destroy(PharmacyItem $pharmacyItem): JsonResponse
     {
-        $pharmacy->delete();
+        $pharmacyItem->delete();
         return response()->json(null, 204);
     }
 }

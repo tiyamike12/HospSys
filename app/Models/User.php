@@ -44,21 +44,6 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
-    public function doctor(): HasOne
-    {
-        return $this->hasOne(Doctor::class);
-    }
-
-    public function nurse(): HasOne
-    {
-        return $this->hasOne(Nurse::class);
-    }
-
-    public function staff(): HasOne
-    {
-        return $this->hasOne(Staff::class);
-    }
-
     public function role(): BelongsTo
     {
         return $this->belongsTo(Role::class);
@@ -67,5 +52,13 @@ class User extends Authenticatable
     public function person(): BelongsTo
     {
         return $this->belongsTo(Person::class);
+    }
+
+    // Custom method to get users with role 'doctor'
+    public function scopeDoctors($query)
+    {
+        return $query->whereHas('role', function ($query) {
+            $query->where('name', 'doctor');
+        });
     }
 }

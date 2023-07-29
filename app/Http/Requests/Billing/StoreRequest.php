@@ -22,12 +22,10 @@ class StoreRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'patient_id' => ['required', 'numeric'],
-            'service_date'  => ['required', 'date'],
-            'service_type'  => ['required', 'string'],
-            'cost'  => ['required', 'numeric'],
-            'insurance_information'  => ['required', 'string'],
-            'payment_status' => ['required', 'string'],
+            'patient_id' => 'required|exists:patients,id',
+            'billing_date' => 'required|date',
+            'amount' => 'required|numeric',
+            'payment_status' => 'required|in:paid,unpaid',
         ];
     }
 }

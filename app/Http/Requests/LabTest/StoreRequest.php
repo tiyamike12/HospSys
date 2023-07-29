@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Requests\Billing;
+namespace App\Http\Requests\LabTest;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class UpdateRequest extends FormRequest
+class StoreRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -22,10 +22,9 @@ class UpdateRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'patient_id' => 'exists:patients,id',
-            'billing_date' => 'date',
-            'amount' => 'numeric',
-            'payment_status' => 'in:paid,unpaid',
+            'test_name' => 'required|string|max:255',
+            'description' => 'nullable|string',
+            'lab_charges' => 'required|numeric|min:0',
         ];
     }
 }

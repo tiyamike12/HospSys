@@ -16,7 +16,7 @@ return new class extends Migration
             $table->bigInteger('patient_id');
             $table->date('billing_date');
             $table->decimal('amount', 10, 2);
-            $table->string('payment_status', 20);
+            $table->enum('payment_status', ['paid', 'unpaid']);
             $table->timestamps();
         });
     }

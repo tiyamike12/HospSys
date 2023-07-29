@@ -37,13 +37,10 @@ class UserSeeder extends Seeder
             'email' => 'admin@localhost.com',
             'phone' => '0991664423',
             'physical_address' => '123 Main St',
-            'user_id' => $user->id
+            'user_id' => $user->id,
+            'job_title' => 'System Admin'
         ]);
 
-        Staff::create([
-            'person_id' => $person->id,
-            'job_title' => 'System Administrator',
-        ]);
     }
 
 }

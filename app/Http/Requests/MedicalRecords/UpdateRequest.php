@@ -22,13 +22,12 @@ class UpdateRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'patient_id' => ['required', 'numeric'],
-            'user_id' => ['required', 'numeric'],
-            'visit_date' => ['required', 'string'],
-            'diagnoses' => ['required', 'string', 'max:255'],
-            'lab_result_id' => ['required', 'numeric'],
-            'test_results' => ['required', 'string'],
-            'treatment_plan' => ['required', 'string'],
+            'patient_id' => 'exists:patients,id',
+            'user_id' => 'exists:users,id',
+            'medical_notes' => 'nullable|string',
+            'diagnoses' => 'nullable|string',
+            'prescriptions' => 'nullable|string',
+            'lab_results' => 'nullable|string',
         ];
     }
 }

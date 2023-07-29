@@ -18,7 +18,9 @@ class BillingController extends Controller
      */
     public function index(): AnonymousResourceCollection
     {
-        return BillingResource::collection(Billing::all());
+        $billings = Billing::with('patient' )->get();
+
+        return BillingResource::collection($billings);
     }
 
     /**

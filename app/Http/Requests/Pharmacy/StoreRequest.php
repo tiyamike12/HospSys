@@ -22,11 +22,10 @@ class StoreRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'medication_name' => ['required', 'string'],
-            'dosage' => ['required', 'string'],
-            'quantity' => ['required', 'numeric'],
-            'manufacturer' => ['required', 'string'],
-            'expiration_date' => ['required', 'date']
+            'item_name' => 'required|string|max:255',
+            'description' => 'nullable|string',
+            'quantity_available' => 'required|integer|min:0',
+            'unit_price' => 'required|numeric|min:0',
         ];
     }
 }

@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Requests\Inventory;
+namespace App\Http\Requests\LabTest;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class StoreRequest extends FormRequest
+class UpdateRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -22,11 +22,9 @@ class StoreRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'item_name' => ['required', 'string'],
-            'item_description' => ['required', 'string'],
-            'quantity' => ['required', 'numeric'],
-            'supplier' => ['required', 'string'],
-            'cost' => ['required', 'string'],
+            'test_name' => 'string|max:255',
+            'description' => 'nullable|string',
+            'lab_charges' => 'numeric|min:0',
         ];
     }
 }

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Requests\Inventory;
+namespace App\Http\Requests\Department;
 
 use Illuminate\Foundation\Http\FormRequest;
 
@@ -22,11 +22,8 @@ class UpdateRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'item_name' => ['required', 'string'],
-            'item_description' => ['required', 'string'],
-            'quantity' => ['required', 'numeric'],
-            'supplier' => ['required', 'string'],
-            'cost' => ['required', 'string'],
+            'department_name' => 'string|max:255',
+            'description' => 'nullable|string',
         ];
     }
 }

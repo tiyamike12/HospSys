@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('medical_records', function (Blueprint $table) {
             $table->id();
             $table->bigInteger('patient_id');
-            $table->bigInteger('doctor_id');
+            $table->bigInteger('user_id');
             $table->text('diagnoses');
             $table->text('medical_notes');
             $table->text('prescriptions');

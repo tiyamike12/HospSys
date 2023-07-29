@@ -6,7 +6,9 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\MedicalRecords\StoreRequest;
 use App\Http\Requests\MedicalRecords\UpdateRequest;
 use App\Http\Resources\MedicalRecordResource;
+use App\Http\Resources\UserResource;
 use App\Models\MedicalRecord;
+use App\Models\User;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
@@ -18,7 +20,10 @@ class MedicalRecordController extends Controller
      */
     public function index(): AnonymousResourceCollection
     {
-        return MedicalRecordResource::collection(MedicalRecord::all());
+        $medicalRecords = MedicalRecord::with('user.person', 'patient')->get();
+
+        return MedicalRecordResource::collection($medicalRecords);
+
     }
 
     /**

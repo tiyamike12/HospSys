@@ -18,7 +18,9 @@ class AppointmentController extends Controller
      */
     public function index(): AnonymousResourceCollection
     {
-        return AppointmentResource::collection(Appointment::all());
+        $listData = Appointment::with('doctor.person', 'patient')->get();
+
+        return AppointmentResource::collection($listData);
     }
 
     /**
@@ -26,7 +28,14 @@ class AppointmentController extends Controller
      */
     public function store(StoreRequest $request): AppointmentResource
     {
-        $appointment = Appointment::create($request->validated());
+        $appointment = Appointment::create([
+            'patient_id' => $request->input('patient_id'),
+            'user_id' => $request->input('user_id'),
+            'appointment_date' => $request->input('appointment_date'),
+            'appointment_time' => $request->input('appointment_time'),
+            'purpose' => $request->input('purpose'),
+        ]);
+
         return new AppointmentResource($appointment);
     }
 
@@ -41,10 +50,17 @@ class AppointmentController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateRequest $request, Appointment $appointment): AppointmentResource
+    public function update(UpdateRequest $request, $appointmentId): AppointmentResource
     {
-        $appointment->fill($request->validated());
-        $appointment->update();
+        $appointment = Appointment::findOrFail($appointmentId);
+
+        $appointment->update([
+            'patient_id' => $request->input('patient_id'),
+            'user_id' => $request->input('user_id'),
+            'appointment_date' => $request->input('appointment_date'),
+            'appointment_time' => $request->input('appointment_time'),
+            'purpose' => $request->input('purpose'),
+        ]);
 
         return new AppointmentResource($appointment);
     }

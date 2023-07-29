@@ -11,15 +11,14 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('staff', function (Blueprint $table) {
+        Schema::create('pharmacy_items', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('person_id')->unique();
-            $table->string('job_title');
+            $table->string('item_name', 100);
+            $table->string('description', 50);
+            $table->integer('quantity_available');
+            $table->string('unit_price', 100);
             $table->timestamps();
-
-            $table->foreign('person_id')->references('id')->on('people')->onDelete('cascade');
         });
-
     }
 
     /**
@@ -27,6 +26,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('staff');
+        Schema::dropIfExists('pharmacies');
     }
 };

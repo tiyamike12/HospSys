@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Requests\Billing;
+namespace App\Http\Requests\OperationTheatre;
 
 use Illuminate\Foundation\Http\FormRequest;
 
@@ -22,10 +22,9 @@ class UpdateRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'patient_id' => 'exists:patients,id',
-            'billing_date' => 'date',
-            'amount' => 'numeric',
-            'payment_status' => 'in:paid,unpaid',
+            'theatre_name' => 'string|max:255',
+            'description' => 'nullable|string',
+            'availability' => 'boolean',
         ];
     }
 }

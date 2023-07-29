@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Requests\LabResults;
+namespace App\Http\Requests\OperationTheatre;
 
 use Illuminate\Foundation\Http\FormRequest;
 
@@ -22,11 +22,9 @@ class StoreRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'user_id' => ['required', 'numeric'],
-            'patient_id' => ['required', 'numeric'],
-            'test_date' => ['required', 'date'],
-            'test_name' => ['required', 'string'],
-            'test_result' => ['required', 'string']
+            'theatre_name' => 'required|string|max:255',
+            'description' => 'nullable|string',
+            'availability' => 'required|boolean',
         ];
     }
 }

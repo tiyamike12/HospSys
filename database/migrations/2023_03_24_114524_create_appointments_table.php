@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('appointments', function (Blueprint $table) {
             $table->id();
             $table->bigInteger('patient_id');
-            $table->bigInteger('doctor_id');
+            $table->bigInteger('user_id');
             $table->date('appointment_date');
             $table->time('appointment_time');
             $table->string('purpose', 20);

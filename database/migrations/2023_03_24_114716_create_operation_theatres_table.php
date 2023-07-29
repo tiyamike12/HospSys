@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('theatre_name');
             $table->string('description');
-            $table->string('availability');
+            $table->boolean('availability');
             $table->timestamps();
         });
     }

@@ -22,11 +22,10 @@ class UpdateRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'medication_name' => ['required', 'string'],
-            'dosage' => ['required', 'string'],
-            'quantity' => ['required', 'numeric'],
-            'manufacturer' => ['required', 'string'],
-            'expiration_date' => ['required', 'date']
+            'item_name' => 'string|max:255',
+            'description' => 'nullable|string',
+            'quantity_available' => 'integer|min:0',
+            'unit_price' => 'numeric|min:0',
         ];
     }
 }

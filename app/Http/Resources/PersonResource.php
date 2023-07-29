@@ -23,6 +23,7 @@ class PersonResource extends JsonResource
             'email' => $this->email,
             'phone' => $this->phone,
             'physical_address' => $this->physical_address,
+            'job_title' => $this->job_title
         ];
     }
 }
