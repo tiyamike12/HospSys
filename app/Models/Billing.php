@@ -12,8 +12,7 @@ class Billing extends Model
     use HasFactory;
 
     protected $fillable = [
-        'patient_id', 'billing_date', 'amount', 'payment_status',
-
+        'patient_id', 'billing_date', 'amount', 'payment_status', 'medical_record_id'
     ];
 
     public function patient(): BelongsTo
@@ -34,6 +33,11 @@ class Billing extends Model
     public function insuranceProvider(): BelongsTo
     {
         return $this->belongsTo(InsuranceProvider::class);
+    }
+
+    public function medicalRecord(): BelongsTo
+    {
+        return $this->belongsTo(MedicalRecord::class);
     }
 
 }

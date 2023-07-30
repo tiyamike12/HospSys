@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Requests\MedicalRecords;
+namespace App\Http\Requests\Availability;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class StoreRequest extends FormRequest
+class AvailabilityRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -22,13 +22,8 @@ class StoreRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'patient_id' => 'required|exists:patients,id',
-            'user_id' => 'required|exists:users,id',
-            'medical_notes' => 'nullable|string',
-            'diagnoses' => 'nullable|string',
-            'prescriptions' => 'nullable|string',
-            'lab_results' => 'nullable|array',
-            'billing' => 'nullable|array',
+            'appointment_date' => 'required|date',
+            'appointment_time' => 'required|date_format:H:i',
         ];
     }
 }

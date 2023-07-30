@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\api;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Patient\SearchRequest;
 use App\Http\Requests\Patient\StoreRequest;
 use App\Http\Requests\Patient\UpdateRequest;
 use App\Http\Resources\PatientResource;
@@ -59,5 +60,18 @@ class PatientController extends Controller
     {
         $patient->delete();
         return response()->json(null, 204);
+    }
+
+    public function search(SearchRequest $request)
+    {
+        $searchQuery = $request->input('q');
+
+        $patients = Patient::where('firstname', 'LIKE', "%$searchQuery%")
+            ->orWhere('surname', 'LIKE', "%$searchQuery%")
+            ->orWhere('email', 'LIKE', "%$searchQuery%")
+            ->orWhere('phone', 'LIKE', "%$searchQuery%")
+            ->get();
+
+        return response()->json($patients);
     }
 }

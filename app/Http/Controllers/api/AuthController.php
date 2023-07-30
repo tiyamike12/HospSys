@@ -3,11 +3,9 @@
 namespace App\Http\Controllers\api;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\LoginUserRequest;
-use App\Http\Requests\StoreUserRequest;
-use App\Models\User;
+use App\Http\Requests\Auth\ChangePasswordRequest;
+use App\Http\Requests\Auth\LoginUserRequest;
 use Illuminate\Http\Request;
-use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 
@@ -50,5 +48,22 @@ class AuthController extends Controller
         return response()->json([
             'message' => 'You have succesfully been logged out and your token has been removed'
         ]);
+    }
+
+    public function changePassword(ChangePasswordRequest $request)
+    {
+        $user = Auth::user();
+
+        // Verify the old password
+        if (!Hash::check($request->input('old_password'), $user->password)) {
+            return response()->json(['message' => 'Old password is incorrect'], 400);
+        }
+
+        // Update the password
+        $user->update([
+            'password' => Hash::make($request->input('new_password')),
+        ]);
+
+        return response()->json(['message' => 'Password changed successfully'], 200);
     }
 }

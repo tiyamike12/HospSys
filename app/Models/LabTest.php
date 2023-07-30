@@ -14,11 +14,22 @@ class LabTest extends Model
 
     protected $fillable = [
         'test_name', 'description', 'lab_charges',
-
     ];
 
     public function billingInvoices(): BelongsToMany
     {
         return $this->belongsToMany(Billing::class)->withPivot('quantity');
+    }
+
+//    public function medicalRecords(): BelongsToMany
+//    {
+//        return $this->belongsToMany(MedicalRecord::class)->withPivot('result');
+//    }
+
+    public function medicalRecords(): BelongsToMany
+    {
+        return $this->belongsToMany(MedicalRecord::class)
+            ->withPivot('quantity')
+            ->withTimestamps();
     }
 }

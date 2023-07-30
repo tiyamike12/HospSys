@@ -11,12 +11,17 @@ class PharmacyItem extends Model
     use HasFactory;
 
     protected $fillable = [
-        'item_name', 'description', 'quantity_available', 'unit_price',
+        'item_name', 'description', 'quantity_available', 'unit_price', 'initial_quantity', 'current_quantity', 'threshold_quantity',
 
     ];
 
     public function billingInvoices(): BelongsToMany
     {
         return $this->belongsToMany(Billing::class)->withPivot('quantity');
+    }
+
+    public function stockChanges()
+    {
+        return $this->hasMany(PharmacyItemStockChange::class);
     }
 }

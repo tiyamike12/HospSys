@@ -49,9 +49,14 @@ class User extends Authenticatable
         return $this->belongsTo(Role::class);
     }
 
-    public function person(): BelongsTo
+    public function person(): HasOne
     {
-        return $this->belongsTo(Person::class);
+        return $this->hasOne(Person::class);
+    }
+
+    public function availability(): HasOne
+    {
+        return $this->hasOne(DoctorAvailability::class, 'doctor_id');
     }
 
     // Custom method to get users with role 'doctor'

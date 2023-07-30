@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Http\Requests;
+namespace App\Http\Requests\User;
 
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Validation\Rules;
+
 class StoreUserRequest extends FormRequest
 {
     /**
@@ -22,8 +22,8 @@ class StoreUserRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'username' => 'required|string|unique:users',
-            'password' => 'required|string',
+//            'username' => 'required|string|unique:users',
+            //'password' => 'required|string',
             'firstname' => 'required|string',
             'lastname' => 'required|string',
             'date_of_birth' => 'required|date',

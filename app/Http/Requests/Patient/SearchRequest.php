@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Requests\MedicalRecords;
+namespace App\Http\Requests\Patient;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class StoreRequest extends FormRequest
+class SearchRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -22,13 +22,7 @@ class StoreRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'patient_id' => 'required|exists:patients,id',
-            'user_id' => 'required|exists:users,id',
-            'medical_notes' => 'nullable|string',
-            'diagnoses' => 'nullable|string',
-            'prescriptions' => 'nullable|string',
-            'lab_results' => 'nullable|array',
-            'billing' => 'nullable|array',
+            'q' => 'required|string',
         ];
     }
 }

@@ -27,6 +27,7 @@ class UpdateRequest extends FormRequest
             'appointment_date' => 'required|date',
             'appointment_time' => 'required|string',
             'purpose' => 'required|string',
+            'status' => 'nullable|string|in:scheduled,in progress,completed,canceled',
         ];
     }
 }

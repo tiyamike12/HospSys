@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests\Appointments;
 
+use App\Rules\OverlappingAppointmentsRule;
 use Illuminate\Foundation\Http\FormRequest;
 
 class StoreRequest extends FormRequest
@@ -24,9 +25,14 @@ class StoreRequest extends FormRequest
         return [
             'patient_id' => 'required|integer|exists:patients,id',
             'user_id' => 'required|integer|exists:users,id',
-            'appointment_date' => 'required|date',
-            'appointment_time' => 'required|string',
+            'appointment_date' => 'required|date|after_or_equal:today',
+            'appointment_time' => [
+                'required',
+                'date_format:H:i',
+                new OverlappingAppointmentsRule(),
+            ],
             'purpose' => 'required|string',
+            'status' => 'nullable|string|in:scheduled,in progress,completed,canceled',
         ];
     }
 }

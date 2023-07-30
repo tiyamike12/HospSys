@@ -25,11 +25,16 @@ class PharmacyItemController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreRequest $request): PharmacyResource
+    public function store(StoreRequest $request): JsonResponse
     {
-        $pharmacy = PharmacyItem::create($request->validated());
-        return new PharmacyResource($pharmacy);
-    }
+        $pharmacyItem = PharmacyItem::create($request->only([
+            'item_name', 'description', 'quantity_available', 'unit_price', 'initial_quantity', 'threshold_quantity'
+        ]));
+        // Set the current quantity to the initial quantity
+        $pharmacyItem->current_quantity = $pharmacyItem->initial_quantity;
+        $pharmacyItem->save();
+
+        return response()->json($pharmacyItem, 201);    }
 
     /**
      * Display the specified resource.
@@ -42,11 +47,13 @@ class PharmacyItemController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateRequest $request, PharmacyItem $pharmacyItem): PharmacyResource
+    public function update(UpdateRequest $request, PharmacyItem $pharmacyItem): JsonResponse
     {
-        $pharmacyItem->fill($request->validated());
-        $pharmacyItem->update();
-        return new PharmacyResource($pharmacyItem);
+        $pharmacyItem->update($request->only([
+            'item_name', 'description', 'unit_price', 'initial_quantity', 'current_quantity', 'threshold_quantity'
+        ]));
+        return response()->json(['message' => 'Pharmacy item updated successfully'], 200);
+
     }
 
     /**

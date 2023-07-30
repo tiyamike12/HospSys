@@ -42,11 +42,20 @@ Route::post('/register', [AuthController::class, 'register']);
 // Protected routes
 Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::post('/logout', [AuthController::class, 'logout']);
+    Route::post('/change-password', [AuthController::class, 'changePassword']);
+
     Route::get('/doctors', [UserController::class, 'getDoctors']);
+    Route::patch('/doctor/availability/{doctorId}', [UserController::class, 'setAvailability']);
+    Route::get('/doctor/availability/{doctorId}', [UserController::class, 'getAvailability']);
+
+    Route::get('/doctors/available', [AppointmentController::class, 'getAvailableDoctors']);
+
     Route::apiResource('/users', UserController::class);
     Route::get('/roles', [RoleController::class, 'index']);
     Route::apiResource('/medical-records', MedicalRecordController::class);
+    Route::post('/patients/search', [PatientController::class, 'search']);
     Route::apiResource('/patients', PatientController::class);
+    Route::get('/appointment/date-range', [AppointmentController::class, 'getAppointmentsByDateRange']);
     Route::apiResource('/appointments', AppointmentController::class);
     Route::apiResource('/billings', BillingController::class);
     Route::apiResource('/wards', WardController::class);
