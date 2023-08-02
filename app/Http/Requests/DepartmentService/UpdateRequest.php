@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Requests\MedicalRecords;
+namespace App\Http\Requests\DepartmentService;
 
 use Illuminate\Foundation\Http\FormRequest;
 
@@ -22,13 +22,9 @@ class UpdateRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'patient_id' => 'required|exists:patients,id',
-            'user_id' => 'required|exists:users,id',
-            'medical_notes' => 'required|string',
-            'diagnoses' => 'required|string',
-            'prescriptions' => 'required|string',
-            'lab_results' => 'required|array',
-
+            'service_name' => 'required|string|max:255',
+            'description' => 'nullable|string',
+            'department_id' => 'numeric|required',
         ];
     }
 }

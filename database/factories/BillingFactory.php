@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -18,11 +19,11 @@ class BillingFactory extends Factory
     {
         return [
             'patient_id' => 1,
-            'service_date' => fake()->date,
-            'service_type' => fake()->text(10),
-            'cost' => fake()->randomFloat(6),
-            'insurance_information' => fake()->text(50),
-            'payment_status' => fake()->randomElements(['pending', 'paid']),
+            'billing_date' => $this->faker->dateTimeThisYear(),
+            'medical_record_id' => 1,
+            'amount' => $this->faker->randomFloat(2, 0, 999999.99),
+            'insurance_provider_id' => 1,
+            'payment_status' => $this->faker->randomElement(['pending', 'paid', 'rejected']),
         ];
     }
 }

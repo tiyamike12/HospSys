@@ -28,7 +28,7 @@ class StoreRequest extends FormRequest
             'diagnoses' => 'nullable|string',
             'prescriptions' => 'nullable|string',
             'lab_results' => 'nullable|array',
-            'billing' => 'nullable|array',
+//            'billing' => 'nullable|array',
         ];
     }
 }

@@ -25,7 +25,9 @@ class UpdateRequest extends FormRequest
             'patient_id' => 'exists:patients,id',
             'billing_date' => 'date',
             'amount' => 'numeric',
-            'payment_status' => 'in:paid,unpaid',
+            'payment_status' => 'required|in:pending,paid,rejected',
+            'insurance_provider_id' => 'nullable',
+            'medical_record_id' => 'required|numeric'
         ];
     }
 }

@@ -20,10 +20,12 @@ class AppointmentFactory extends Factory
     public function definition(): array
     {
         return [
-            'patient_id' => 1,
-            'user_id' => 1,
-            'appointment_date_time' => fake()->dateTime(),
-            'status' => fake()->randomElements(['active', 'closed']),
+            'patient_id' => 6,
+            'user_id' => 2,
+            'appointment_date' => fake()->date('Y-m-d'),
+            'appointment_time' => fake()->time('H:i:s'),
+            'purpose' => fake()->text(20),
+            'status' => fake()->text(10),
         ];
     }
 }

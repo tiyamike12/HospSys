@@ -22,7 +22,9 @@ class MedicalRecordController extends Controller
      */
     public function index(): AnonymousResourceCollection
     {
-        $medicalRecords = MedicalRecord::with('user.person', 'patient')->get();
+        $perPage = 10;
+
+        $medicalRecords = MedicalRecord::with('user.person', 'patient')->orderBy('created_at', 'desc')->paginate($perPage);
 
         return MedicalRecordResource::collection($medicalRecords);
 
@@ -94,20 +96,20 @@ class MedicalRecordController extends Controller
         }
 
         // Update associated billing records
-        if ($request->has('billing')) {
-            $billingsData = collect($request->input('billing'))->map(function ($billing) use ($patient_id) {
-                // Add the patient_id to each billing before saving
-                return [
-                    'patient_id' => $patient_id,
-                    'billing_date' => $billing['billing_date'],
-                    'amount' => $billing['amount'],
-                    'payment_status' => $billing['payment_status'],
-                ];
-            });
-
-            $medicalRecord->billings()->delete();
-            $medicalRecord->billings()->createMany($billingsData);
-        }
+//        if ($request->has('billing')) {
+//            $billingsData = collect($request->input('billing'))->map(function ($billing) use ($patient_id) {
+//                // Add the patient_id to each billing before saving
+//                return [
+//                    'patient_id' => $patient_id,
+//                    'billing_date' => $billing['billing_date'],
+//                    'amount' => $billing['amount'],
+//                    'payment_status' => $billing['payment_status'],
+//                ];
+//            });
+//
+//            $medicalRecord->billings()->delete();
+//            $medicalRecord->billings()->createMany($billingsData);
+//        }
 
         return response()->json(['message' => 'Medical record updated successfully'], 200);
 

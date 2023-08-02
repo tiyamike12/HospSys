@@ -20,8 +20,8 @@ class PharmacyItem extends Model
         return $this->belongsToMany(Billing::class)->withPivot('quantity');
     }
 
-    public function stockChanges()
-    {
-        return $this->hasMany(PharmacyItemStockChange::class);
-    }
+//    public function stockChanges()
+//    {
+//        return $this->hasMany(PharmacyItemStockChange::class);
+//    }
 }

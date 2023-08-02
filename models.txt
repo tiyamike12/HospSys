@@ -115,3 +115,78 @@ consider adding support for different languages and time zones.
 
 Waiting List: Implement a waiting list feature for patients to be added to a queue if there
 are no available appointments on their preferred date and time.
+----------------------------------------------------------------------------
+
+Insurance Billing Integration: When creating a billing record, allow the user to associate it with an
+insurance provider. This way, the hospital can track payments from different insurance companies for specific patients.
+
+Insurance Payment Status: Enhance the Billing model to include an additional field to track the status of
+insurance payment (e.g., "pending," "paid," "rejected," etc.). This will provide better insights into the billing
+and payment process for insurance claims.
+
+Insurance Reports: Create reports that summarize billing and payment information for different insurance providers.
+These reports could include details like the total amount billed to each insurance company, the amount paid,
+outstanding amounts, and the status of insurance claims.
+
+Dashboard Analytics: Develop a dashboard with graphs and charts that display key metrics related to insurance billing.
+This can include a visual representation of the total billing amounts, payments received, and pending insurance claims.
+
+Claim Re-submission: Allow the hospital staff to resubmit rejected insurance claims with corrections and additional
+information, helping improve the claim acceptance rate and reducing the time taken to receive payments.
+
+Automated Claim Processing: Explore the possibility of integrating with insurance companies' APIs to automate claim
+processing. This would enable real-time submission and processing of insurance claims directly from the hospital management system.
+
+Claim Validation Rules: Implement validation rules to ensure that billing information is accurate and complete before
+submitting claims to insurance providers. This will help avoid claim rejections due to missing or incorrect information.
+
+Insurance Provider Management: Build functionalities to manage insurance providers, allowing users to add, edit, or
+deactivate insurance providers as needed.
+
+Claim Status Notifications: Set up automated notifications to alert relevant staff about the status of insurance claims.
+For example, send notifications when a claim is approved, rejected, or when payments are received.
+
+Claim Aging Analysis: Create a feature to analyze the aging of insurance claims, helping the hospital identify
+long-pending claims that require attention or follow-up.
+
+Claim Audit Trail: Implement an audit trail to track any changes made to billing records associated with insurance
+claims. This ensures accountability and transparency in case of any discrepancies or disputes.
+
+-------------------------
+
+ Low Stock Notification:
+
+The application periodically checks the quantity available for each pharmacy item against its threshold quantity.
+If the quantity available falls below the threshold, the application generates a low stock notification.
+The notification can be sent to administrators or relevant personnel to take appropriate actions, such as restocking the item.
+
+------------------
+
+Department Services Report: This report can display a list of all departments along with the services each department
+offers. It provides a clear overview of the hospital's services distribution and helps administrators understand the
+range of medical care available.
+
+Services by Department: This report can be generated for a specific department and lists all the
+services offered by that department. It helps in understanding the specialization and expertise of each department.
+
+Service Utilization Report: This report shows the utilization of each service across all departments. It indicates
+which services are highly in demand and may require additional resources or staffing.
+
+Staff Allocation by Department and Service: This report provides an overview of the staff assigned to each department
+and the services they provide. It allows administrators to see if there's a balanced distribution of staff across
+various departments and if any department needs more or fewer staff members.
+
+Department and Service Trends: By analyzing historical data, trends can be identified in the popularity of services
+within specific departments. This can help with resource planning and adjusting services based on patient needs.
+
+Department Efficiency Report: This report evaluates the efficiency of each department based on the number of services
+offered and the number of staff members. It can help identify departments that may be overwhelmed or underutilized.
+
+Staff Productivity Report: This report compares the number of services provided by each staff member in different
+departments. It helps to recognize high-performing staff and identify areas where additional training or support
+might be needed.
+
+//TODO Piecharts for Appointments
+        Insurance vs cash
+        Claim statuses
+        AUDIT

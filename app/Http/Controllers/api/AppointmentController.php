@@ -27,8 +27,11 @@ class AppointmentController extends Controller
      */
     public function index(): AnonymousResourceCollection
     {
-        $listData = Appointment::with('user.person', 'patient')->get();
+        $perPage = 10;
 
+        $listData = Appointment::with('user.person', 'patient')
+            ->orderBy('created_at', 'desc')
+            ->paginate($perPage);
         return AppointmentResource::collection($listData);
     }
 
@@ -67,6 +70,11 @@ class AppointmentController extends Controller
             $appointment->appointment_time
         );
 
+//        activity()
+//            ->performedOn($appointment)
+//            ->causedBy($user)
+//            ->withProperties(['customProperty' => 'customValue'])
+//            ->log('Look, I logged something');
         return new AppointmentResource($appointment);
     }
 
@@ -203,5 +211,42 @@ class AppointmentController extends Controller
         });
 
         return response()->json($availableDoctors, 200);
+    }
+
+    public function getScheduledAppointmentsCount($userId): JsonResponse
+    {
+        $count = Appointment::where('user_id', $userId)
+            ->where('status', 'scheduled')
+            ->count();
+
+        return response()->json(['scheduled' => $count]);
+
+    }
+
+    public function getCompletedAppointmentsCount($userId): JsonResponse
+    {
+        $count = Appointment::where('user_id', $userId)
+            ->where('status', 'completed')
+            ->count();
+
+        return response()->json(['completed' => $count]);
+
+    }
+
+    public function getCancelledAppointmentsCount($userId): JsonResponse
+    {
+        $count = Appointment::where('user_id', $userId)
+            ->where('status', 'canceled')
+            ->count();
+
+        return response()->json(['canceled' => $count]);
+
+    }
+
+    public function getOverallStatistics()
+    {
+        $statistics = Appointment::getStatusStatistics();
+
+        return response()->json($statistics);
     }
 }

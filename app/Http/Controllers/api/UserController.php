@@ -27,7 +27,11 @@ class UserController extends Controller
      */
     public function index(): AnonymousResourceCollection
     {
-        return UserResource::collection(User::all());
+        $perPage = 10;
+
+        $users = User::paginate($perPage);
+
+        return UserResource::collection($users);
     }
 
     /**
@@ -224,4 +228,6 @@ class UserController extends Controller
 
         return response()->json($availability, 200);
     }
+
+    //TODO when creating user doctor, should set availabiilty, or infact any user working hours!!!
 }

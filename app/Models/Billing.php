@@ -6,14 +6,18 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Spatie\Activitylog\LogOptions;
+use Spatie\Activitylog\Traits\LogsActivity;
 
 class Billing extends Model
 {
-    use HasFactory;
+    use HasFactory, LogsActivity;
 
     protected $fillable = [
-        'patient_id', 'billing_date', 'amount', 'payment_status', 'medical_record_id'
+        'patient_id', 'billing_date', 'amount', 'payment_status', 'medical_record_id', 'insurance_provider_id'
     ];
+
+    //"pending," "paid," "rejected,"
 
     public function patient(): BelongsTo
     {
@@ -38,6 +42,14 @@ class Billing extends Model
     public function medicalRecord(): BelongsTo
     {
         return $this->belongsTo(MedicalRecord::class);
+    }
+
+    public function getActivitylogOptions(): LogOptions
+    {
+        return LogOptions::defaults()
+            ->logOnly(['patient_id', 'billing_date', 'amount', 'payment_status', 'medical_record_id', 'insurance_provider_id'])
+            ->logOnlyDirty()
+            ->dontSubmitEmptyLogs();
     }
 
 }

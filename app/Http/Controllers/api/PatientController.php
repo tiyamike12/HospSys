@@ -11,6 +11,7 @@ use App\Models\Patient;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
+use Illuminate\Pagination\LengthAwarePaginator;
 
 class PatientController extends Controller
 {
@@ -19,8 +20,22 @@ class PatientController extends Controller
      */
     public function index(): AnonymousResourceCollection
     {
-        return PatientResource::collection(Patient::all());
+        // Define the number of patients to show per page
+        $perPage = 20;
 
+        // Retrieve paginated patients
+        $patients = Patient::paginate($perPage);
+
+        // Convert the paginated patients to a LengthAwarePaginator instance
+        $paginator = new LengthAwarePaginator(
+            $patients->items(), // The items to be paginated
+            $patients->total(), // Total number of items
+            $patients->perPage(), // Items per page
+            $patients->currentPage(), // Current page
+            ['path' => request()->url()] // Additional paginator options if needed
+        );
+
+        return PatientResource::collection($paginator);
     }
 
     /**
@@ -73,5 +88,20 @@ class PatientController extends Controller
             ->get();
 
         return response()->json($patients);
+    }
+
+    public function getInsuranceProviderForPatient($patientId): JsonResponse
+    {
+        $patient = Patient::find($patientId);
+
+        if (!$patient) {
+            // Patient not found, handle the error
+            return response()->json(['error' => 'Patient not found'], 404);
+        }
+
+        // Get the insurance provider associated with the patient
+        $insuranceProvider = $patient->insuranceProvider;
+
+        return response()->json($insuranceProvider);
     }
 }

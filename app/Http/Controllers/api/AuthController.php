@@ -17,10 +17,17 @@ class AuthController extends Controller
 
         if (Auth::attempt($credentials)) {
             $user = Auth::user();
+
+            $user->load('role');
+            $userRole = $user;
             $token = $user->createToken('auth_token')->plainTextToken;
-            return response()->json(['token' => $token], 200);
+
+            // Set the token in the cookie with HttpOnly and Secure flags
+//            $cookie = cookie('token', $token, 60 * 24 * 7, null, null, true, true); // Expires in 7 days
+
+            return response()->json(['status' => true, 'user' => $user, 'token' => $token], 200);
         } else {
-            return response()->json(['message' => 'Invalid credentials'], 401);
+            return response()->json(['status' => false, 'message' => 'Invalid credentials'], 401);
         }
     }
 

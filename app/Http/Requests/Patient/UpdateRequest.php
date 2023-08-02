@@ -29,7 +29,8 @@ class UpdateRequest extends FormRequest
             'phone' => ['required', 'numeric'],
             'email' => ['required', 'email'],
             'physical_address' => ['required', 'string'],
-            'insurance_information' => ['string']
+            'provider_id'=> ['nullable', 'numeric'],
+            'provider_number'=> ['nullable', 'string']
         ];
     }
 }

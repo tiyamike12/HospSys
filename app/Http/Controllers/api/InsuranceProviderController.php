@@ -8,13 +8,14 @@ use App\Http\Requests\InsuranceProvider\UpdateRequest;
 use App\Http\Resources\InsuranceProviderResource;
 use App\Models\InsuranceProvider;
 use Illuminate\Http\Request;
+use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 
 class InsuranceProviderController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(): AnonymousResourceCollection
     {
         return InsuranceProviderResource::collection(InsuranceProvider::all());
 

@@ -19,7 +19,8 @@ class Person extends Model
         'phone',
         'physical_address',
         'user_id',
-        'job_title'
+        'job_title',
+        'department_id'
     ];
 
     public function user(): BelongsTo
@@ -27,5 +28,8 @@ class Person extends Model
         return $this->belongsTo(User::class, 'user_id');
     }
 
-
+    public function department(): BelongsTo
+    {
+        return $this->belongsTo(Department::class, 'department_id');
+    }
 }
