@@ -73,6 +73,9 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::get('/billings/overall-statistics', [BillingController::class, 'getOverallBillingStatistics']);
     Route::get('/billings/chart-analysis', [BillingController::class, 'billingAnalytics']);
     Route::get('/billings/outstanding', [BillingController::class, 'getOutstandingBills']);
+    Route::get('/billings/patient/{patientId}', [BillingController::class, 'getOutstandingBillingsByPatient']);
+    Route::get('/billings/insurance-provider/{providerId}', [BillingController::class, 'getOutstandingBillingsByProvider']);
+    Route::get('/billings/payment-status-totals', [BillingController::class, 'getPaymentStatusTotals']);
 
     Route::apiResource('/billings', BillingController::class);
     Route::apiResource('/wards', WardController::class);

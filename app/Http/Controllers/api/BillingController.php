@@ -131,5 +131,45 @@ class BillingController extends Controller
 //        return response()->json($pendings);
     }
 
+    public function getOutstandingBillingsByPatient($patientId): AnonymousResourceCollection
+    {
+//        $perPage = 10;
+
+        $outstandingsByPatient = Billing::where('patient_id', $patientId)
+            ->where('payment_status', 'pending')
+            ->with('patient', 'insuranceProvider')
+            ->get();
+
+        return BillingResource::collection($outstandingsByPatient);
+
+//        return response()->json($pendings);
+    }
+
+    public function getOutstandingBillingsByProvider($providerId): AnonymousResourceCollection
+    {
+//        $perPage = 10;
+
+        $outstandingsByProvider = Billing::where('insurance_provider_id', $providerId)
+            ->where('payment_status', 'pending')
+            ->with('patient', 'insuranceProvider')
+            ->get();
+
+        return BillingResource::collection($outstandingsByProvider);
+
+//        return response()->json($pendings);
+    }
+
+    public function getPaymentStatusTotals(): JsonResponse
+    {
+        $totals = [
+            'pending' => Billing::totalPendingAmount(),
+            'paid' => Billing::totalPaidAmount(),
+            'rejected' => Billing::totalRejectedAmount(),
+        ];
+
+        return response()->json($totals);
+    }
+
+
 
 }

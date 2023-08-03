@@ -44,6 +44,21 @@ class Billing extends Model
         return $this->belongsTo(MedicalRecord::class);
     }
 
+    public function scopeTotalPendingAmount($query)
+    {
+        return $query->where('payment_status', 'pending')->sum('amount');
+    }
+
+    public function scopeTotalPaidAmount($query)
+    {
+        return $query->where('payment_status', 'paid')->sum('amount');
+    }
+
+    public function scopeTotalRejectedAmount($query)
+    {
+        return $query->where('payment_status', 'rejected')->sum('amount');
+    }
+
     public function getActivitylogOptions(): LogOptions
     {
         return LogOptions::defaults()
